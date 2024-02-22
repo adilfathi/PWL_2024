@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Praktikum Basic Routing
 Route::get('/hello', function () {
@@ -36,9 +39,9 @@ Route::get('/posts/{post}/comments/{comment}', function($postId, $commentId){
     return 'Post ke- '.$postId. " Komentar ke -:".$commentId;
 });
 
-Route::get('/articles/{id}', function($id){
-    return 'Halaman Artikel ke- '.$id;
-});
+// Route::get('/articles/{id}', function($id){
+//     return 'Halaman Artikel ke- '.$id;
+// });
 
 //Optional Parameter 
 
@@ -50,3 +53,12 @@ Route::get('/usersa/{name?}', function($name="Adil"){
     return 'Nama Saya '.$name;
 });
 
+// Route Praktikum Controller 
+
+Route::get('/hellow', [WelcomeController::class,'hello']);
+Route::get('/', [PageController::class,'index']);
+Route::get('/about', [PageController::class,'about']);
+Route::get('/articles/{id}', [PageController::class,'articles'],function($id){});
+Route::resource('photos',PhotoController::class);
+Route::resource('photos',PhotoController::class)-> only(['index','show']);
+Route::resource('photos',PhotoController::class)-> except(['create','store','update','destroy']);
